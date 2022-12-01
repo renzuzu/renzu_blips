@@ -17,7 +17,7 @@ Citizen.CreateThread(function()
 				Players[xPlayer.job.name] = {}
 			end
 			if Players[xPlayer.job.name][src] == nil then
-				Players[xPlayer.job.name][src] = {src = src, name = xPlayer.getPlayerInfo('playerName'), invehicle = false, coord = GetEntityCoords(GetPlayerPed(src))}
+				Players[xPlayer.job.name][src] = {src = src, name = xPlayer.name, invehicle = false, coord = GetEntityCoords(GetPlayerPed(src))}
 			elseif Players[xPlayer.job.name][src] then
 				Players[xPlayer.job.name][src].coord = GetEntityCoords(GetPlayerPed(src))
 			end
@@ -85,7 +85,7 @@ AddEventHandler('esx:onPlayerJoined', function(src, char, data)
 			Players[xPlayer.job.name] = {}
 		end
 		if Players[xPlayer.job.name][src] == nil then
-			Players[xPlayer.job.name][src] = {src = src, name = xPlayer.getPlayerInfo('playerName'), invehicle = false, coord = GetEntityCoords(GetPlayerPed(src))}
+			Players[xPlayer.job.name][src] = {src = src, name = xPlayer.name , invehicle = false, coord = GetEntityCoords(GetPlayerPed(src))}
 		elseif Players[xPlayer.job.name][src] then
 			Players[xPlayer.job.name][src].coord = GetEntityCoords(GetPlayerPed(src))
 		end
@@ -116,7 +116,7 @@ AddEventHandler('esx:setJob', function(src,j,old)
 			Players[xPlayer.job.name] = {}
 		end
 		if Players[xPlayer.job.name][src] == nil then
-			Players[xPlayer.job.name][src] = {src = src, name = xPlayer.getPlayerInfo('playerName'), invehicle = false, coord = GetEntityCoords(GetPlayerPed(src))}
+			Players[xPlayer.job.name][src] = {src = src, name = xPlayer.name, invehicle = false, coord = GetEntityCoords(GetPlayerPed(src))}
 		elseif Players[xPlayer.job.name][src] then
 			Players[xPlayer.job.name][src].coord = GetEntityCoords(GetPlayerPed(src))
 		end
