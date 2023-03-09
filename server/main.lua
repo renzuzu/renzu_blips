@@ -1,10 +1,5 @@
-ESX = nil
-ObjectList = {}
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj 
-end)
+ESX = exports['es_extended']:getSharedObject()
 local playercache = {}
-local playercaches = {}
-local delveh = {}
 GlobalState.PlayerBlips = {}
 Citizen.CreateThread(function()
 	local xPlayers = ESX.GetPlayers()
@@ -27,18 +22,17 @@ Citizen.CreateThread(function()
 	playercache = Players
 
 	while true do
-		local cache = GlobalState.PlayerBlips
-		for job,v in pairs(cache) do
+		for job,v in pairs(playercache) do
 			for k,v in pairs(v) do
 				local ped = GetPlayerPed(v.src)
 				if DoesEntityExist(ped) then
 					local coord = GetEntityCoords(ped)
-					cache[job][v.src].coord = coord
-					cache[job][v.src].invehicle = GetVehiclePedIsIn(ped) ~= 0 and GetVehicleType(GetVehiclePedIsIn(ped)) or false
+					playercache[job][v.src].coord = coord
+					playercache[job][v.src].invehicle = GetVehiclePedIsIn(ped) ~= 0 and GetVehicleType(GetVehiclePedIsIn(ped)) or false
 				end
 			end
 		end
-		GlobalState.PlayerBlips = cache
+		GlobalState.PlayerBlips = playercache
 		Wait(5000)
 	end
 end)
@@ -57,6 +51,7 @@ AddEventHandler('esx_multicharacter:relog', function()
 		end
 	end
 	GlobalState.PlayerBlips = Players
+	playercache = Players
 end)
 
 AddEventHandler("playerDropped",function()
@@ -71,6 +66,7 @@ AddEventHandler("playerDropped",function()
 		end
 	end
 	GlobalState.PlayerBlips = Players
+	playercache = Players
 end)
 
 AddEventHandler('esx:onPlayerJoined', function(src, char, data)
