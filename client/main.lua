@@ -1,21 +1,7 @@
-ESX						= nil
-local addstamina = false
-local regenhealth = false
-local strongfist = false
-local onSpawn = false
+ESX = exports['es_extended']:getSharedObject()
 local player = nil
-local HandObject = {}
-
-viewer = false
 local loaded = false
-Citizen.CreateThread(function()
-	while ESX == nil do
-		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
-		Citizen.Wait(0)
-	end
-	while ESX.GetPlayerData().job == nil do
-		Citizen.Wait(100)
-	end
+Citizen.CreateThreadNow(function()
 	ESX.PlayerData = ESX.GetPlayerData()
 	PlayerData = ESX.PlayerData
 	player = LocalPlayer.state
@@ -160,26 +146,3 @@ BlipOption = function(blip,job,name,veh,coord)
 		AddTextComponentString(name)
 		EndTextCommandSetBlipName(blip)
 end
-
-RegisterCommand('testevent4', function(source,args)
-	TriggerEvent('testevent','waw','gago')
-end)
-
-local performanceModIndices = {11,12,13,16}
-function PerformanceUpgradeVehicle(vehicle, customWheels)
-    customWheels = customWheels or false
-    local max
-    if DoesEntityExist(vehicle) and IsEntityAVehicle(vehicle) then
-        SetVehicleModKit(vehicle, 0)
-        for i = 0, 49 do
-            local modType = i
-            max = GetNumVehicleMods(vehicle, modType) - 1
-            SetVehicleMod(vehicle, tonumber(modType), tonumber(max), customWheels)
-        end
-        ToggleVehicleMod(vehicle, 18, true) -- Turbo
-    end
-end
-
-RegisterCommand('testupgrade', function(source, args, raw)
-    PerformanceUpgradeVehicle(GetVehiclePedIsIn(PlayerPedId(), false), false)
-end)
